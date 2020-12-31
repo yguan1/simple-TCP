@@ -1,0 +1,37 @@
+Our code consistently get a high score on the tests when we set LOG=DEBUG.
+
+This is the bash command we use to test our code (in build/ directory):
+==============================================================================
+make && LOG=DEBUG ./test-tcp --filter "?(data_transfer|conn_init|conn_term)/*" | ../tests/colorize-minimal.sh && make grade
+==============================================================================
+
+Below is our output of make grade (in the best case):
+(The DEBUG info part is too long to be copied here so we only kept the grade)
+
+Assignment 1
+==============================================================================
+Category                                 Passed / Total       Score  / Points
+------------------------------------------------------------------------------
+3-way handshake                          2      / 2           20.00  / 20.00
+Connection tear-down                     3      / 3           10.00  / 10.00
+Data transfer                            27     / 27          20.00  / 20.00
+------------------------------------------------------------------------------
+                                                      TOTAL = 50.00  / 50
+==============================================================================
+
+And since there are some race situations we did not handle perfectly,
+sometimes it only produces 2/3 or 26/27 on the 2nd and 3rd category, but
+in most cases, when we use DEBUG level, the score is as shown above.
+
+Sometimes when out of luck:
+
+Assignment 1
+==============================================================================
+Category                                 Passed / Total       Score  / Points
+------------------------------------------------------------------------------
+3-way handshake                          2      / 2           20.00  / 20.00
+Connection tear-down                     3      / 3           10.00  / 10.00
+Data transfer                            26     / 27          19.26  / 20.00
+------------------------------------------------------------------------------
+                                                      TOTAL = 49.26  / 50
+==============================================================================
